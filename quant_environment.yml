@@ -1,0 +1,22 @@
+name: quant-stack
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9.13
+  - git
+  - pip
+  - pybind11
+  - cmake
+  - openssl=1.1.1
+  - libtiff
+  - numpy==1.23.4
+  - ffmpeg
+  - lightgbm==3.3.5
+  - cvxpy==1.2.2
+  - pip:
+      - poetry==1.4.0
+      - charset-normalizer==3.1.0
+      - catboost==1.1.1
+      - xgboost==1.7.4
+      - qdldl==0.1.5.post3
