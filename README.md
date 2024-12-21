@@ -1,4 +1,7 @@
 # Quant Stack Project
+
+<img src="img/python_quant_stack.png">
+
 This repository contains a quantitative analysis environment setup for data science and machine learning projects. The project includes configuration files for creating a consistent development environment and running Jupyter Lab.
 This stack is used for courses of https://quantscience.io/.
 
