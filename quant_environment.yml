@@ -10,13 +10,22 @@ dependencies:
   - cmake
   - openssl=1.1.1
   - libtiff
-  - numpy==1.23.4
+  - numpy=1.23.4
+  - pandas=1.5.3
+  - scipy
+  - statsmodels
+  - scikit-learn
   - ffmpeg
-  - lightgbm==3.3.5
-  - cvxpy==1.2.2
+  - lightgbm=3.3.5
+  - cvxpy=1.2.2
   - pip:
       - poetry==1.4.0
-      - charset-normalizer==3.1.0
+      # Supprimez ou mettez à jour cette ligne
+      # - charset-normalizer==3.1.0
+      - charset-normalizer>=3.4.0
       - catboost==1.1.1
       - xgboost==1.7.4
       - qdldl==0.1.5.post3
+      - openbb
+      - riskfolio-lib
+      - numba

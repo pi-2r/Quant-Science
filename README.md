@@ -5,66 +5,116 @@
 This repository contains a quantitative analysis environment setup for data science and machine learning projects. The project includes configuration files for creating a consistent development environment and running Jupyter Lab.
 This stack is used for courses of https://quantscience.io/.
 
-## Environment Setup
-The project uses Conda for managing the Python environment. The quant_environment.yml file specifies the required dependencies:
+## Prerequisites
+
+    Docker
+
+    Make (optional, for using the provided makefile commands)
+
+## Quick Start
+
+Clone this repository:
 
 ```sh
-name: quant-stack
-channels:
-  - conda-forge
-  - defaults
-dependencies:
-  - python=3.9.13
-  - git
-  - pip
-  - pybind11
-  - cmake
-  - openssl=1.1.1
-  - libtiff
-  - numpy==1.23.4
-  - ffmpeg
-  - lightgbm==3.3.5
-  - cvxpy==1.2.2
-  - pip:
-    - poetry==1.4.0
-    - charset-normalizer==3.1.0
-    - catboost==1.1.1
-    - xgboost==1.7.4
-    - qdldl==0.1.5.post3
+git clone https://github.com/pi-2r/Quant-Science.git
+cd Quant-Science
 ```
-To create the environment, run:
+Build the Docker image:
+```sh
+make build
+```
+Run the container:
+```sh
+make run
+```
+By default, the Jupyter password is set to "password". You can customize it by running:
 
 ```sh
-conda env create -f quant_environment.yml
+make run JUPYTER_PASSWORD=your_custom_password
 ```
 
-## Starting Jupyter Lab
-The project includes a bash script start-jupyter.sh to launch Jupyter Lab:
+Access JupyterLab in your browser at: [http://localhost:8888](http://localhost:8888)
 
-```sh
-#!/bin/bash
+## Environment Details
 
-source activate quant-stack
+This environment is built on Anaconda with Python 3.9.13 and includes the following key libraries:
 
-jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.password="$JUPYTER_PASSWORD"
-```
+Core Libraries
 
+    NumPy 1.23.4
 
-To start Jupyter Lab:
+    Pandas
 
-- Ensure you have set the JUPYTER_PASSWORD environment variable.
-- Make the script executable: chmod +x start-jupyter.sh
--  Run the script: ./start-jupyter.sh
+    SciPy
 
-Jupyter Lab will start on port 8888, accessible from any IP address, and will require the password set in the JUPYTER_PASSWORD environment variable.
+    StatsModels
 
-## Additional Files
-The repository also includes a Dockerfile and a Makefile, which may contain additional configuration for containerization and build processes.
+    scikit-learn
 
-## Getting Started
+Financial Libraries
 
--  Clone this repository
--  Set the JUPYTER_PASSWORD environment variable in the makefile
--  Run the command: **make build** and **make run**
--  Access Jupyter Lab through your web browser at http://localhost:8888
--  Enter the password set in the JUPYTER_PASSWORD environment variable
+    OpenBB
+
+    QuantLib
+
+    riskfolio-lib
+
+    vectorbt
+
+    ta-lib
+
+    zipline-reloaded
+
+    pyfolio-reloaded
+
+    alphalens-reloaded
+
+    quantstats
+
+    Interactive Brokers API (ibapi)
+
+Machine Learning
+
+    LightGBM 3.3.5
+
+    CatBoost 1.1.1
+
+    XGBoost 1.7.4
+
+Optimization
+
+    CVXPY 1.2.2
+
+## Available Commands
+
+The makefile provides several convenient commands:
+
+    make build: Build the Docker image
+
+    make run: Start the container with JupyterLab
+
+    make stop: Stop and remove the running container
+
+    make clean: Remove the Docker image
+
+    make logs: Display container logs
+
+    make shell: Open a shell inside the container
+
+    make help: Display available commands
+
+## Customization
+
+You can customize the environment by modifying:
+
+    quant_environment.yml: Add or modify conda and pip packages
+
+    Dockerfile: Change the base image or add system dependencies
+
+## Troubleshooting
+
+If you encounter dependency conflicts during the build process, try:
+
+    Updating the charset-normalizer version to >=3.4.0 in the quant_environment.yml file
+
+    Ensuring compatible versions between packages
