@@ -2,15 +2,21 @@ DOCKER_IMAGE_NAME = quant-stack
 DOCKER_CONTAINER_NAME = quant-container
 JUPYTER_PASSWORD ?= password
 NOTEBOOK_DIR ?= $(PWD)/notebook
+ARCH := $(shell uname -m)
 
 build:
-	@echo "Building Docker image $(DOCKER_IMAGE_NAME)..."
+ifeq ($(ARCH),arm64)
+	#Mac M2 (ARM)
+	docker buildx build --platform linux/amd64 -t $(DOCKER_IMAGE_NAME) .
+else
+	#Mac Intel (x86_64)
 	docker build -t $(DOCKER_IMAGE_NAME) .
+endif
 
 run:
 	@echo "Launching container $(DOCKER_CONTAINER_NAME)..."
 	@HASHED_PASSWORD=$$(docker run --rm $(DOCKER_IMAGE_NAME) python -c "from jupyter_server.auth import passwd; print(passwd('$(JUPYTER_PASSWORD)'))") && \
-	docker run -d --name $(DOCKER_CONTAINER_NAME) -p 8888:8888 -v $(NOTEBOOK_DIR):/app/ -e JUPYTER_PASSWORD="$$HASHED_PASSWORD" $(DOCKER_IMAGE_NAME)
+	docker run -d --name $(DOCKER_CONTAINER_NAME) -p 8889:8888 -v $(NOTEBOOK_DIR):/app/ -e JUPYTER_PASSWORD="$$HASHED_PASSWORD" $(DOCKER_IMAGE_NAME)
 
 stop:
 	@echo "Stopping and removing container $(DOCKER_CONTAINER_NAME)..."
