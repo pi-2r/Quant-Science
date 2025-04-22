@@ -41,3 +41,5 @@ travis
 
 #notebook
 notebook/.ipynb_checkpoints
+
+.env
