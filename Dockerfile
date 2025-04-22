@@ -1,5 +1,8 @@
 FROM continuumio/anaconda3:latest
 
+ARG GITHUB_TOKEN
+ARG PRIVATE_REPO
+
 WORKDIR /app
 
 COPY quant_environment.yml .
@@ -55,6 +58,9 @@ RUN pip install "openbb[all]" --no-cache-dir && \
     pip install jupyter ipykernel && \
     pip install jupyter_copilot && \
     pip install QuantLib
+
+# Installez le dépôt privé
+RUN pip install git+https://${GITHUB_TOKEN}:@${PRIVATE_REPO}
 
 COPY start-jupyter.sh /start-jupyter.sh
 RUN chmod +x /start-jupyter.sh

@@ -4,13 +4,20 @@ JUPYTER_PASSWORD ?= password
 NOTEBOOK_DIR ?= $(PWD)/notebook
 ARCH := $(shell uname -m)
 
+# get value of GITHUB_TOKEN and PRIVATE_REPO from .env file
+ifneq (,$(wildcard .env))
+    include .env
+    export
+endif
+
+
 build:
 ifeq ($(ARCH),arm64)
 	#Mac M2 (ARM)
-	docker buildx build --platform linux/amd64 -t $(DOCKER_IMAGE_NAME) .
+	docker buildx build --platform linux/amd64 -t $(DOCKER_IMAGE_NAME) --build-arg GITHUB_TOKEN=$(GITHUB_TOKEN)  --build-arg PRIVATE_REPO=$(PRIVATE_REPO) .
 else
 	#Mac Intel (x86_64)
-	docker build -t $(DOCKER_IMAGE_NAME) .
+	docker build -t $(DOCKER_IMAGE_NAME) --build-arg GITHUB_TOKEN=$(GITHUB_TOKEN)  --build-arg PRIVATE_REPO=$(PRIVATE_REPO) .
 endif
 
 run:
